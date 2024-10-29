@@ -16,7 +16,7 @@ import com.gustavo.agendaalunos.model.Aluno;
 
 public class FormularioAlunoActivity extends AppCompatActivity {
 
-    public static final String TITULO_APPBAR = "Adicionar novo aluno";
+    public static final String TITULO_APPBAR = "Cadastro novo aluno";
     private EditText campoNome;
     private EditText campoTelefone;
     private EditText campoEmail;
