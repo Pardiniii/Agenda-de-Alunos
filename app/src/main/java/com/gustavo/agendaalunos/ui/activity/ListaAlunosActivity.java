@@ -2,15 +2,22 @@ package com.gustavo.agendaalunos.ui.activity;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
+import android.widget.Toast;
+
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.gustavo.agendaalunos.R;
 import com.gustavo.agendaalunos.dao.AlunoDAO;
+import com.gustavo.agendaalunos.model.Aluno;
+
+import java.util.List;
 
 public class ListaAlunosActivity extends AppCompatActivity {
 
@@ -25,6 +32,8 @@ public class ListaAlunosActivity extends AppCompatActivity {
         setContentView(R.layout.activity_lista_alunos);
 
         configuraFABnovoAluno();
+        dao.salva(new Aluno("Gustavo", "111222333", "gustavo@email.com"));
+        dao.salva(new Aluno("Julia", "3344555", "julia@email.com"));
     }
 
     private void configuraFABnovoAluno() {
@@ -49,9 +58,19 @@ public class ListaAlunosActivity extends AppCompatActivity {
 
     private void configuraListaAlunos() {
         ListView listaAlunos = findViewById(R.id.activity_lista_alunos_listview);
+        final List<Aluno> alunos = dao.todos();
         listaAlunos.setAdapter(new ArrayAdapter<>(
                 this,
                 android.R.layout.simple_list_item_1,
-                dao.todos()));
+                alunos));
+        listaAlunos.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> adapterView, View view, int posicao, long id) {
+                Aluno alunoEscolhido = alunos.get(posicao);
+                Intent vaiParaFormularioAlunoActivity = new Intent(ListaAlunosActivity.this, FormularioAlunoActivity.class);
+                vaiParaFormularioAlunoActivity.putExtra("aluno", alunoEscolhido);
+                startActivity(vaiParaFormularioAlunoActivity);
+            }
+        });
     }
 }

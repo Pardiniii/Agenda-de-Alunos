@@ -14,9 +14,11 @@ import com.gustavo.agendaalunos.R;
 import com.gustavo.agendaalunos.dao.AlunoDAO;
 import com.gustavo.agendaalunos.model.Aluno;
 
+import java.io.Serializable;
+
 public class FormularioAlunoActivity extends AppCompatActivity {
 
-    public static final String TITULO_APPBAR = "Cadastro novo aluno";
+    public static final String TITULO_APPBAR = "Adicionar novo aluno";
     private EditText campoNome;
     private EditText campoTelefone;
     private EditText campoEmail;
@@ -31,6 +33,12 @@ public class FormularioAlunoActivity extends AppCompatActivity {
 
         inicializacaoDosCampos();
         configuraBotaoSalvar();
+
+        Intent dados = getIntent();
+        Aluno aluno = (Aluno) dados.getSerializableExtra("aluno");
+        campoNome.setText(aluno.getNome());
+        campoTelefone.setText(aluno.getTelefone());
+        campoEmail.setText(aluno.getEmail());
     }
 
     private void configuraBotaoSalvar() {
